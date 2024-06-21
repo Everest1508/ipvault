@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SSHConfig
+from .models import SSHConfig,AccessToken
 
 class SSHConfigAdmin(admin.ModelAdmin):
     list_display = ('name', 'host', 'port', 'username')
@@ -8,3 +8,4 @@ class SSHConfigAdmin(admin.ModelAdmin):
 admin.site.register(SSHConfig, SSHConfigAdmin)
 
 # Register your models here.
+admin.site.register(AccessToken)
