@@ -1,6 +1,7 @@
 # Create your models here.
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import User
 
 
 class SSHConfig(models.Model):
@@ -9,6 +10,8 @@ class SSHConfig(models.Model):
     port = models.PositiveIntegerField()
     username = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
+    user = models.ManyToManyField(
+        User, related_name='ssh_configs')
 
     def __str__(self):
         return self.name
@@ -19,6 +22,9 @@ class AccessToken(models.Model):
     token = models.TextField(_("Access Token"))
     expires_in = models.DateField(
         _("Expires In"), auto_now=False, auto_now_add=False)
+
+    user = models.ManyToManyField(
+        User, related_name='access_token')
 
     def __str__(self) -> str:
         return self.name
@@ -34,3 +40,5 @@ class FreeServer(models.Model):
     api_password = models.CharField(_("Admin Password"), max_length=400)
     renovation_date = models.DateField(
         _("Renovation Field"), auto_now=False, auto_now_add=False, null=True, blank=True)
+    user = models.ManyToManyField(
+        User, related_name='free_server')
